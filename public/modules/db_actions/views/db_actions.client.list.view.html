@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Actions </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<STYLE TYPE="text/css"> 
+<!-- 
+.indented 
+{ 
+   padding-left: 20pt; 
+   padding-right: 20pt; 
+} 
+--> 
+a:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover {
+    color: blue;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+</STYLE>
+</head>
+<body>
+
+<section data-ng-controller="DbActionsController" data-ng-init="find()">
+    <h1> Current actions</h1>
+    <div class="container-fluid">
+      <table style="width:100%" data-ng-repeat="action in actions | orderBy : 'nameSpace'">
+        <tr>
+        <td style="width:50%" style="background-color:#dddddd"><a data-ng-href="#!/actions/{{action._id}}"<B> {{ action.nameSpace }} </B></a></td>
+        <td style="width:50%" style="background-color:#dddddd"><B> {{ action.currentMessage }} </B></td>
+       </tr>
+       <tr data-ng-repeat="header in action.headers track by $index"> 
+        <td CLASS="indented"> {{ header | headerKey }} </td>
+        <td CLASS="indented"> {{ header | valueKey }} </td>
+       </tr>
+      </table>
+    </div>
+    <div class="pull-right">
+        <a class="btn btn-primary" href="/#!/actions/{{dbAction._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn btn-primary" data-ng-click="remove();">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+</section>
+</body>
+</html>

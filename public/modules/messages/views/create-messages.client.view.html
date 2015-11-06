@@ -1,0 +1,58 @@
+<section data-ng-controller="DbMessagesController">
+    <div class="page-header">
+        <h1>New Message</h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="Message">Message</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="message" id="Message" 
+                               class="form-control" placeholder="Message" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Type">Type</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="type" id="Type" 
+                               class="form-control" value="databridge" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="subType">Sub Type</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="subType" id="subType" 
+                               class="form-control" placeholder="Sub Type" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="description" id="description" 
+                               class="form-control" placeholder="Description" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Headers">Headers</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="header1" id="header1" 
+                               class="form-control" placeholder="Header 1">
+                        <input type="text" data-ng-model="header2" id="header2" 
+                               class="form-control" placeholder="Header 2">
+                        <input type="text" data-ng-model="header3" id="header3" 
+                               class="form-control" placeholder="Header 3">
+                        <input type="text" data-ng-model="header4" id="header4" 
+                               class="form-control" placeholder="Header 4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default">
+                </div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</section>

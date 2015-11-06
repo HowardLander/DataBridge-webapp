@@ -1,0 +1,61 @@
+<section data-ng-controller="DbActionsController">
+    <div class="page-header">
+        <h1>New Action</h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="currentMessage">Current Message</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="currentMessage" id="currentMessage" 
+                               class="form-control" placeholder="Current Message" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="nameSpace">Name Space</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="nameSpace" id="nameSpace" 
+                               class="form-control" placeholder="Name Space" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Header 1">Header 1</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="header1Key" id="header1Key" 
+                               class="form-control" placeholder="Header 1 Key">
+                        <input type="text" data-ng-model="header1Value" id="header1Value" 
+                               class="form-control" placeholder="Header 1 Value">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Header 2">Header 2</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="header2Key" id="header2" 
+                               class="form-control" placeholder="Header 2 Key">
+                        <input type="text" data-ng-model="header2Value" id="header2Value" 
+                               class="form-control" placeholder="Header 2 Value">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Header 3">Header 3</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="header3Key" id="header3" 
+                               class="form-control" placeholder="Header 3 Key">
+                        <input type="text" data-ng-model="header3Value" id="header3Value" 
+                               class="form-control" placeholder="Header 3 Value">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox"> Enabled</label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default">
+                </div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</section>

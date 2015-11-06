@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>DataBridge</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="lib/slick-carousel/slick/slick-theme.css">
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/slick-carousel/slick/slick.js"></script>
+    <script src="lib/angular-slick/dist/slick.js"></script>
+</head>
+<body>
+<section data-ng-controller="HomeController">
+	<div class="jumbotron text-center">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+				<img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/DataBridge-Logo-Final.png" />
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<p class="lead">
+              Sociometric Network Analysis for Dark Data from the Long Tail of Science
+			</p>
+		</div>
+		<div class="row">
+			<p>
+				<a class="btn btn-primary btn-lg" href="http://databridge.web.unc.edu" target="_blank">Learn more</a>
+			</p>
+		</div>
+	</div>
+	<div>
+		<h2>DataBridge: A National Science Foundation Funded Collaborative Research Project</h2>
+		<p> The DataBridge [DB1-3] is a collaborative project funded under the NSF 'Big Data' program 
+            (OCI-1247652, OCI-1247602, OCI-1247663) designed to assist in the discovery of dark data sets 
+            from the long tail of science. Dr Arcot Rajasekar is the PI of the DataBridge project. The 
+            DataBridge aims to build queryable communities of datasets using sociometric network analysis 
+            (SNA).  This approach is being tested to evaluate the ability to leverage various forms of 
+            metadata to facilitate discovery of new knowledge. Each dataset in the Databridge has an 
+            associated name space used as a first level partitioning. In addition to testing known 
+            algorithms for SNA community building, the DataBridge project has built a message-based 
+            platform that allows users to provide their own algorithms for each of the stages in the 
+            community building process. The stages are: <p>
+		<ul>
+			<li>
+Signature Generation (SG): An SG algorithm creates a metadata signature for a dataset. Signature algorithms might use text metadata provided by the dataset creator or derive metadata.
+			</li>
+			<li>
+Relevance Algorithm (RA): An RA compares a pair of datasets and produces a similarity value between 0 and 1 for the two datasets.
+			</li>
+			<li>
+Sociometric Network Analysis (SNA): The SNA will operate on a similarity matrix produced by an RA to partition all of the datasets in the name space into a set of clusters. These clusters represent communities of closely related datasets. 
+			</li>
+			<li>
+				Click
+				<em>Sign Up</em>
+				to get started.
+			</li>
+			<li>
+			   Click
+				<em>Sign In</em>
+				if you already have an account.
+			</li>
+		</ul>
+	</div>
+
+  <br>
+   <div>
+     <!-- <carousel interval="5000" no-wrap="false">
+       <slide ng-repeat="slide in slides" active="slide.active">
+        <img ng-src="{{slide.image}}" style="margin:auto;">
+        <div class="carousel-caption">
+          <h4>Slide {{$index}}</h4>
+          <p>{{slide.text}}</p>
+        </div>
+      </slide>
+    </carousel> -->
+    <div class="carousel">
+	  <div ng-repeat="slide in slides"><img ng-src="{{slide.image}}" style="margin:auto;width:500px;"></div>
+	</div>
+
+
+   </div>
+</section>
+</body>
+</html>

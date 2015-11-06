@@ -1,0 +1,27 @@
+{
+  "name": "DataBridge-webapp",
+  "version": "0.0.1",
+  "description": "Web app for the DataBridge platform",
+  "dependencies": {
+    "bootstrap": "~3.1",
+    "angular": "~1.4.6",
+    "angular-resource": "~1.4",
+    "angular-mocks": "~1.4",
+    "angular-cookies": "~1.4",
+    "angular-animate": "~1.4.6",
+    "angular-touch": "~1.4",
+    "angular-sanitize": "~1.4",
+    "angular-bootstrap": "~0.11.0",
+    "angular-ui-utils": "~0.1.1",
+    "angular-ui-router": "~0.2.15",
+    "slick-carousel": "~1.5.8",
+    "angular-slick": "~0.2.1",
+    "when": "3.7.4"
+  },
+  "resolutions": {
+    "angular": "1.4.6",
+    "angular-bootstrap": "~0.11.0",
+    "angular-ui-utils": "~3.0.0",
+    "slick-carousel": "~1.5.8"
+  }
+}
