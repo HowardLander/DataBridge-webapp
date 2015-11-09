@@ -4,7 +4,7 @@ module.exports = {
 	db: 'mongodb://localhost/firsttest-test',
 	port: 3001,
 	app: {
-		title: 'FirstTest - Test Environment'
+		title: 'DataBridge'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

@@ -5,7 +5,7 @@ module.exports = {
     AMQPHost: 'localhost',
     AMQPExchange: 'integration-test-howard', 
 	app: {
-		title: 'FirstTest - Development Environment'
+		title: 'DataBridge'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

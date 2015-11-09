@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('signatures')
-  .controller('DbSignaturesController', ['$scope', '$stateParams', '$location', 'Authentication', 'DbSignatures', 
-    function($scope, $stateParams, $location, Authentication, DbSignature) {
+  .controller('DbSignaturesController', ['$scope', '$stateParams', '$location', 'Utilities', 'Authentication', 'DbSignatures', 
+    function($scope, $stateParams, $location, Utilities, Authentication, DbSignature) {
         $scope.values = {};
 
         // Create new Category
@@ -71,15 +71,41 @@ angular.module('signatures')
             console.log('scope.signature: ', $scope.signature);
         };
 
-        $scope.execute = function(className, nameSpace, outputFile) {
+        $scope.execute = function(className, nameSpace, signatureDirectory) {
             console.log('className: ' , className);
-
+            var lastDirCharacter = signatureDirectory.charAt(signatureDirectory.length - 1);
+            if (lastDirCharacter !== '/') {
+               signatureDirectory = signatureDirectory.concat('/');
+            }
+            var lastDot = className.lastIndexOf('.');
+            var lastClass = className.slice(lastDot + 1);
+            var outputDir = signatureDirectory.concat(nameSpace, '-', lastClass);
+            var outputFile = Utilities.dateFileName(outputDir, '.net');
+            $scope.outputFile = outputFile;
+            console.log('outputFile: ' , outputFile);
+            console.log('stateParams: ' , $stateParams);
+           
             DbSignature.execute.query({
                 signatureId: $stateParams.signatureId,
                 className: className,
                 nameSpace: nameSpace,
                 outputFile: outputFile
             });
+
+            return outputFile;
         };
     }
-]);
+]).service('Utilities', function() {
+
+       this.dateFileName = function(prefix, postfix) {
+          var d = new Date();
+          var year = String(d.getFullYear());
+          var month = ('0' + String(d.getMonth() + 1)).slice(-2);
+          var date = ('0' + String(d.getDate())).slice(-2);
+          var hours = ('0' + String(d.getHours())).slice(-2);
+          var minutes = ('0' + String(d.getMinutes())).slice(-2);
+          var seconds = ('0' + String(d.getSeconds())).slice(-2);
+          var tmpName = prefix.concat('-',year,'-',month,'-',date,'-', hours, '-', minutes, '-', seconds, postfix);
+          return tmpName;
+    };
+  });

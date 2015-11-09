@@ -2,9 +2,9 @@
 
 module.exports = {
 	app: {
-		title: 'FirstTest',
-		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
-		keywords: 'MongoDB, Express, AngularJS, Node.js'
+		title: 'DataBridge',
+		description: 'NSF funded DataBridge project',
+		keywords: 'NSF, BigData, Similarity, SNA'
 	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
