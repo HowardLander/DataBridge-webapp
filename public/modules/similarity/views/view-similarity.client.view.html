@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Signatures </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<STYLE TYPE="text/css">
+</STYLE>
+</head>
+<section data-ng-controller="DbSimilarityController" data-ng-init="findOne()">
+    <div class="page-header">
+      <ul style="list-style:none;padding:0px;" >
+         <li><h1><B> Class Name: {{ similarity.className }} </B></h1></li>
+         <li style="padding:0px 0px 0px 10px"> <B>Type:</B> {{ similarity.type }} </li>
+         <li style="padding:0px 0px 0px 10px"> <B>Description:</B> {{ similarity.description }} </li>
+    </div>
+    <div class="pull-right">
+        <a class="btn btn-primary" href="/#!/similarity/{{similarity._id}}/launch">
+            <i class="glyphicon glyphicon-play-circle"></i>
+        </a>
+        <a class="btn btn-primary" href="/#!/similarity/{{similarity_id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn btn-primary" data-ng-click="remove();">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+</section>
