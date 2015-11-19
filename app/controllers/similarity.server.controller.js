@@ -132,7 +132,7 @@ exports.launch = function(req, res) {
           options.headers.outputFile = req.body.outputFile;
           options.headers.nameSpace = req.body.nameSpace;
           ch.publish(ex, '', new Buffer(message), options);
-          //console.log(" [x] Sent event with header %s:%s", message, key, value);
+          console.log(' [x] Sent event with options %s', options);
           return ch.close();
         });
       })).ensure(function() { conn.close(); });

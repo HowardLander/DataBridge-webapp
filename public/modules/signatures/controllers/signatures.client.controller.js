@@ -8,7 +8,7 @@ angular.module('signatures')
         // Create new Category
         $scope.create = function() {
             // Create new object
-            var dbSignature = new DbSignature ({
+            var dbSignature = new DbSignature.query ({
                 className: this.className,
                 type: this.type,
                 description: this.description
@@ -71,28 +71,17 @@ angular.module('signatures')
             console.log('scope.signature: ', $scope.signature);
         };
 
-        $scope.execute = function(className, nameSpace, signatureDirectory) {
+        $scope.execute = function(className, nameSpace, input, parameters) {
             console.log('className: ' , className);
-            var lastDirCharacter = signatureDirectory.charAt(signatureDirectory.length - 1);
-            if (lastDirCharacter !== '/') {
-               signatureDirectory = signatureDirectory.concat('/');
-            }
-            var lastDot = className.lastIndexOf('.');
-            var lastClass = className.slice(lastDot + 1);
-            var outputDir = signatureDirectory.concat(nameSpace, '-', lastClass);
-            var outputFile = Utilities.dateFileName(outputDir, '.net');
-            $scope.outputFile = outputFile;
-            console.log('outputFile: ' , outputFile);
             console.log('stateParams: ' , $stateParams);
            
             DbSignature.execute.query({
                 signatureId: $stateParams.signatureId,
                 className: className,
                 nameSpace: nameSpace,
-                outputFile: outputFile
+                input: input,
+                parameters: parameters
             });
-
-            return outputFile;
         };
     }
 ]).service('Utilities', function() {

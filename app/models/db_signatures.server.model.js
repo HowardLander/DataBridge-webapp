@@ -17,7 +17,7 @@ var DbSignatureSchema = new Schema({
         trim: true,
         unique : false,
         // make this a required field
-        required: 'message cannot be blank',
+        required: 'class name cannot be blank',
     },
 
     type: {
@@ -34,11 +34,9 @@ var DbSignatureSchema = new Schema({
         default: '',
         trim: true,
         unique : false,
-        // make this a required field
-        required: 'description cannot be blank',
     }
 
 });
 
-DbSignatureSchema.set('collection', 'DB_Signatures');
+DbSignatureSchema.set('collection', 'DB_Signature_Algorithms');
 mongoose.model('DbSignature', DbSignatureSchema);

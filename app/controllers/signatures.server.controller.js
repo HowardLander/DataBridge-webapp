@@ -104,7 +104,8 @@ exports.launch = function(req, res) {
     console.log('signatureId: ', req.body.signatureId);
     console.log('className: ', req.body.className);
     console.log('nameSpace: ', req.body.nameSpace);
-    console.log('outputFile: ', req.body.outputFile);
+    console.log('input: ', req.body.input);
+    console.log('parameters: ', req.body.parameters);
 
     var amqp = require('amqplib');
     var when = require('when');
@@ -112,7 +113,7 @@ exports.launch = function(req, res) {
     // Default values for these.  Maybe they will eventually come from the client.
     var AMQPHost = 'amqp://localhost';
     var AMQPExchange = 'integration-test-howard';
-    var nameHeader = 'Create.SimilarityMatrix.Java.MetadataDB.URI';
+    var nameHeader = 'Insert.Metadata.Java.URI.MetadataDB';
 
     amqp.connect(AMQPHost).then(function(conn) {
       return when(conn.createChannel().then(function(ch) {
@@ -126,13 +127,14 @@ exports.launch = function(req, res) {
 
           // Key value pair
           options.headers.type = 'databridge';
-          options.headers.subtype = 'relevance';
+          options.headers.subtype = 'ingestmetadata';
           options.headers.name = nameHeader;
           options.headers.className = req.body.className;
-          options.headers.outputFile = req.body.outputFile;
           options.headers.nameSpace = req.body.nameSpace;
+          options.headers.inputURI = req.body.input;
+          options.headers.params = req.body.parameters;
           ch.publish(ex, '', new Buffer(message), options);
-          //console.log(" [x] Sent event with header %s:%s", message, key, value);
+          console.log(' [x] Sent event with options %s', options);
           return ch.close();
         });
       })).ensure(function() { conn.close(); });
