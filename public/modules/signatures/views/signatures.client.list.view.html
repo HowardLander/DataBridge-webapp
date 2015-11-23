@@ -38,7 +38,7 @@ a:hover {
 <body>
 
 <section data-ng-controller="DbSignaturesController" data-ng-init="find()">
-    <h1> Current Signatures</h1>
+    <h1> Current Signature Algorithms</h1>
     <div>
       <ul style="list-style:none;padding:0px;" data-ng-repeat="signature in signatures | orderBy : 'signature'">
          <li> <a data-ng-href="#!/signatures/{{signature._id}}"<B> Classname: {{ signature.className }} </B></a></li>
