@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Network Algorithms</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<STYLE TYPE="text/css"> 
+<!-- 
+.indented 
+{ 
+   padding-left: 20pt; 
+   padding-right: 20pt; 
+} 
+--> 
+a:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover {
+    color: blue;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+</STYLE>
+</head>
+<body>
+
+<section data-ng-controller="DbNetworkController" data-ng-init="find()">
+    <h1> Current Network Analyses Algorithms</h1>
+    <div>
+      <ul style="list-style:none;padding:0px;" data-ng-repeat="network in networks | orderBy : 'network'">
+         <li> <a data-ng-href="#!/network/{{network._id}}"<B> Classname: {{ network.className }} </B></a></li>
+         <li style="padding:0px 0px 0px 10px"> <B>Type:</B> {{ network.type }} </li>
+         <li style="padding:0px 0px 0px 10px"> <B>Description:</B> {{ network.description }} </li>
+      </ul>
+    </div>
+    <div class="pull-right">
+        <a class="btn btn-primary" href="/#!/network/{{network._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn btn-primary" data-ng-click="remove();">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+</section>
+</body>
+</html>

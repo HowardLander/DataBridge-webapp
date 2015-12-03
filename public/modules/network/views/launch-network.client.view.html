@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Network Analyses Generation </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<STYLE TYPE="text/css">
+a:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+</STYLE>
+</head>
+<section data-ng-controller="DbNetworkController" data-ng-init="findOne()">
+    <div class="page-header">
+      <ul style="list-style:none;padding:0px;" >
+         <li><h1><B> Class Name: {{ network.className }} </B></h1></li>
+         <li style="padding:0px 0px 0px 10px"> <B>Description:</B> {{ network.description }} </li>
+         <li style="padding:0px 0px 0px 10px"> <B>Type:</B> {{ network.type }} </li>
+
+         <h3 style="padding:0px 0px 0px 10px">User provided information</h3> 
+         <div class="form-group">
+            <label style="padding:0px 0px 0px 10px" class="control-label">Name Space</label>
+            <input type="text" data-ng-model="nameSpace" id="nameSpace">
+         <div>
+         <div class="form-group">
+            <label style="padding:0px 0px 0px 10px" class="control-label">Similarity</label>
+            <input type="text" data-ng-model="similarity" id="similarity">
+         <div>
+         <div class="form-group">
+            <label style="padding:0px 0px 0px 10px" class="control-label">Parameters</label>
+            <input type="text" data-ng-model="parameters" id="parameters">
+         <div>
+    </div>
+    <div class="pull-right">
+        <a class="btn btn-primary btn-lg" data-ng-click="outputFile=execute(network.className, nameSpace, similarity, parameters);">
+            <i class="glyphicon glyphicon-play-circle"></i>
+        </a>
+    </div>
+</section>
