@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+function populate() }
+   alert("in populate");
+}
+</script>
+<title>Search</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<STYLE TYPE="text/css"> 
+<!-- 
+.indented 
+{ 
+   padding-left: 20pt; 
+   padding-right: 20pt; 
+} 
+--> 
+a:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover {
+    color: blue;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+</STYLE>
+</head>
+<body>
+
+<section data-ng-controller="DbSearchController" data-ng-init="find()">
+    <h1> Search Existing Networks</h1>
+       
+       <form>
+          <b>Enter the URL of a DataSet:</b> 
+             <input type="text" size=70 ng-model="searchURL" ng-change="findNameSpaces(searchURL);">
+       </form>
+
+    <div>
+       <p>
+       <br>
+       <b>Select one of the name spaces containing the DataSet</b>
+       <select ng-model="selectedNameSpace" id="firstSelect" 
+           data-ng-change="findMetadata(selectedNameSpace.nameSpace);"
+           ng-options="item.nameSpace for item in nameSpaces">
+       </select>
+    </div>
+
+    <div>
+       <p>
+       <b>Metadata analyses available for this name space</b>
+<!--
+    <div class="checkbox" ng-repeat="item in metadata" >
+          ng-init="thisIndex = {{$index}}"
+-->
+    <div>
+    <form action="">
+       <fieldset>
+          <div ng-repeat="item in metadata">
+          <input type ="checkbox" name={{item}} value={{item}} 
+          ng-true-value=1 ng-false-value=0
+          ng-model="checked"
+          ng-click="findAlgorithms(item, $index, checked);"> <b>{{item}}</b>
+             <div ng-show="{{checked}}==1" ng-repeat="algorithm in algorithms[$index]">
+             &nbsp;&nbsp;&nbsp;<input type ="checkbox" 
+             name={{item}}_{{algorithm}} value={{algorithm}} 
+             ng-true-value=1 ng-false-value=0
+             ng-model="algo_checked"
+             ng-click=addToClicks(algo_checked,item,algorithm)> {{algorithm}}
+             </div>
+             <br/>
+          </div>
+       </fieldset>
+    </form>
+    </div>
+    </div>
+    <div>
+       <b>Number of actions to retrieve:</b> <input type="text" size=10 ng-model="nMatches"><br>
+       <input type="button" value="Submit" ng-click="execute(searchURL, selectedNameSpace.nameSpace);">
+    </div>
+    <div id="submitResults" ng-show=showResults>
+    <div>
+       <h1> Search Results </h1>
+    </div>
+    <div class="container-fluid">
+      <table style="width:100%">
+        <tr ng-repeat="thisData in returnedData track by $index">
+           <td><a data-ng-href={{thisData.URL}} target="_blank" <B>{{ thisData.title }}</B></a> </td>
+        </tr>
+      </table>
+    </div>
+    </div>
+
+</section>
+</body>
+</html>
