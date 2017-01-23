@@ -111,7 +111,7 @@ exports.launch = function(req, res) {
 
     // Default values for these.  Maybe they will eventually come from the client.
     var AMQPHost = req.app.locals.AMQPHost;
-    var AMQPExchange = req.app.locals.AMQPExchange
+    var AMQPExchange = req.app.locals.AMQPExchange;
     var nameHeader = 'Create.SimilarityMatrix.Java.MetadataDB.URI';
 
     amqp.connect(AMQPHost).then(function(conn) {
