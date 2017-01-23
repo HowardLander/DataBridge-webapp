@@ -41,6 +41,7 @@ module.exports = function(db) {
 	app.locals.cssFiles = config.getCSSAssets();
     app.locals.AMQPHost = config.AMQPHost;
     app.locals.AMQPExchange = config.AMQPExchange;
+    app.locals.AMQPRPCExchange = config.AMQPRPCExchange;
 
 	// Passing the request url to environment locals
 	app.use(function(req, res, next) {

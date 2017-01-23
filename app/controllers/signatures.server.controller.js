@@ -111,8 +111,8 @@ exports.launch = function(req, res) {
     var when = require('when');
 
     // Default values for these.  Maybe they will eventually come from the client.
-    var AMQPHost = 'amqp://localhost';
-    var AMQPExchange = 'integration-test-howard';
+    var AMQPHost = req.app.locals.AMQPHost;
+    var AMQPExchange = req.app.locals.AMQPExchange;
     var nameHeader = 'Insert.Metadata.Java.URI.MetadataDB';
 
     amqp.connect(AMQPHost).then(function(conn) {

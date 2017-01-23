@@ -1,9 +1,14 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/install-test',
-    AMQPHost: 'localhost',
-    AMQPExchange: 'integration-test-howard', 
+    // config to access the mongoDB using name/password authentication
+	db: 'mongodb://user:password@yourhost:yourport/yourdb',
+
+    // The host and exchange info for the AMQP queues.
+    AMQPHost: 'amqp://yourhost',
+    AMQPRPCExchange: 'your-rpcQueue', 
+    AMQPExchange: 'yournormalExchange', 
+
 	app: {
 		title: 'DataBridge'
 	},
