@@ -50,6 +50,7 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
     console.log('in delete');
     var network = req.network;
+    console.log('req.network: ', req.network);
 
     network.remove(function(err) {
         if (err) {

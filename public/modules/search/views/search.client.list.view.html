@@ -46,7 +46,7 @@ a:hover {
     <h1> Search Existing Networks</h1>
        
        <form>
-          <b>Enter the URL of a DataSet:</b> 
+          <b>Enter the URL or identifier of a DataSet:</b> 
              <input type="text" size=70 ng-model="searchURL" ng-change="findNameSpaces(searchURL);">
        </form>
 
@@ -98,8 +98,10 @@ a:hover {
     </div>
     <div class="container-fluid">
       <table style="width:100%">
+        <tr> <td><B><big> Data Identifier</big></B></td> <td><B><big>Similarity</big></B></td> </tr>
         <tr ng-repeat="thisData in returnedData track by $index">
-           <td><a data-ng-href={{thisData.URL}} target="_blank" <B>{{ thisData.title }}</B></a> </td>
+           <td><a data-ng-href={{thisData.URL}} target="_blank" <B>{{ thisData.title }}</B></a></td>
+           <td><B> {{thisData.similarity}}</B></td>
         </tr>
       </table>
     </div>

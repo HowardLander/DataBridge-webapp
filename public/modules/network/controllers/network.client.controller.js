@@ -18,7 +18,7 @@ angular.module('network')
 
             // Redirect after save
             dbNetwork.$save(function(response) {
-                $location.path('network/create' + response._id);
+                $location.path('network');
 
                 // Clear form fields
                 $scope.className = '';
@@ -41,7 +41,7 @@ angular.module('network')
                 }
             } else {
                 $scope.network.$remove(function() {
-                    $location.path('signatures');
+                    $location.path('network');
                 });
             }
         };
