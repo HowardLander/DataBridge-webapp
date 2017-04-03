@@ -42,8 +42,8 @@ a:hover {
     <div>
       <ul style="list-style:none;padding:0px;" data-ng-repeat="namespace in namespaces | orderBy : 'namespace'">
          <li> <a data-ng-href="#!/namespaces/{{namespace._id}}"<B> Name: {{ namespace.nameSpace }} </B></a></li>
-         <li style="padding:0px 0px 0px 0px"> <B>ID:</B> {{ namespace._id }} </li>
          <li style="padding:0px 0px 0px 0px"> <B>Description:</B> {{ namespace.description }} </li>
+         <li style="padding:0px 0px 0px 0px"> <B>Date Added:</B> {{ namespace._id | dateFromObjectId }} </li>
       </ul>
     </div>
     <div class="pull-right">

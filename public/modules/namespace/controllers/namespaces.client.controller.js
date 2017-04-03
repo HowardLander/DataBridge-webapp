@@ -74,17 +74,11 @@ angular.module('namespaces' )
             console.log('scope.namespace: ', $scope.namespace);
         };
     }
-]).service('Utilities', function() {
+]).filter('dateFromObjectId', function() {
 
-       this.dateFileName = function(prefix, postfix) {
-          var d = new Date();
-          var year = String(d.getFullYear());
-          var month = ('0' + String(d.getMonth() + 1)).slice(-2);
-          var date = ('0' + String(d.getDate())).slice(-2);
-          var hours = ('0' + String(d.getHours())).slice(-2);
-          var minutes = ('0' + String(d.getMinutes())).slice(-2);
-          var seconds = ('0' + String(d.getSeconds())).slice(-2);
-          var tmpName = prefix.concat('-',year,'-',month,'-',date,'-', hours, '-', minutes, '-', seconds, postfix);
-          return tmpName;
-    };
-  });
+   return function (objectId) {
+          var  newVal = new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
+          return newVal.toString();
+      };
+    });
+//  });
