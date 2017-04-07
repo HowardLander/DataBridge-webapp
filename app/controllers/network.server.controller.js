@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 /**
- * Create a Db signature
+ * Create a Db network
  */
 exports.create = function(req, res) {
     console.log('in create: ', req.network);
@@ -29,7 +29,7 @@ exports.create = function(req, res) {
 };
 
 /**
- * Show the current Db signature
+ * Show the current Db network
  */
 exports.read = function(req, res) {
     console.log('in read: ', req.network);
@@ -37,15 +37,27 @@ exports.read = function(req, res) {
 };
 
 /**
- * Update a Db signature
+ * Update a Db network
  */
 exports.update = function(req, res) {
-    console.log('in update');
+    console.log('in update for network');
+    var network = req.network;
+    console.log('network: ', network);
+    network = _.extend(network, req.body);
+    network.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                network: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(network);
+        }
+    });
 
 };
 
 /**
- * Delete an Db signature
+ * Delete an Db network
  */
 exports.delete = function(req, res) {
     console.log('in delete');
@@ -65,7 +77,7 @@ exports.delete = function(req, res) {
 };
 
 /**
- * List of Db signatures
+ * List of Db network
  */
 exports.list = function(req, res) {
     console.log('in list');
@@ -84,7 +96,7 @@ exports.networkByID = function(req, res, next, id) {
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).send({
-            signature: 'Signature is invalid'
+            network: 'Network is invalid'
         });
     }
 

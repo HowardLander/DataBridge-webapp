@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 /**
- * Create a Db signature
+ * Create a Db similarity
  */
 exports.create = function(req, res) {
     console.log('in create: ', req.similarity);
@@ -29,7 +29,7 @@ exports.create = function(req, res) {
 };
 
 /**
- * Show the current Db signature
+ * Show the current Db similarity
  */
 exports.read = function(req, res) {
     console.log('in read: ', req.similarity);
@@ -37,15 +37,26 @@ exports.read = function(req, res) {
 };
 
 /**
- * Update a Db signature
+ * Update a Db similarity
  */
 exports.update = function(req, res) {
-    console.log('in update');
-
+    console.log('in update for similarity');
+    var similarity = req.similarity;
+    console.log('similarity: ', similarity);
+    similarity = _.extend(similarity, req.body);
+    similarity.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                similarity: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(similarity);
+        }
+    });
 };
 
 /**
- * Delete an Db signature
+ * Delete an Db similarity
  */
 exports.delete = function(req, res) {
     console.log('in delete');
@@ -64,7 +75,7 @@ exports.delete = function(req, res) {
 };
 
 /**
- * List of Db signatures
+ * List of Db similarity
  */
 exports.list = function(req, res) {
     console.log('in list');

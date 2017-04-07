@@ -18,10 +18,13 @@
          <li style="padding:0px 0px 0px 10px"> <B>Description:</B> {{ similarity.description }} </li>
     </div>
     <div class="pull-right">
+        <a class="btn btn-primary" href="/#!/similarity">
+            <i class="glyphicon glyphicon-home"></i>
+        </a>
         <a class="btn btn-primary" href="/#!/similarity/{{similarity._id}}/launch">
             <i class="glyphicon glyphicon-play-circle"></i>
         </a>
-        <a class="btn btn-primary" href="/#!/similarity/{{similarity_id}}/edit">
+        <a class="btn btn-primary" href="/#!/similarity/{{similarity._id}}/edit">
             <i class="glyphicon glyphicon-edit"></i>
         </a>
         <a class="btn btn-primary" data-ng-click="remove();">

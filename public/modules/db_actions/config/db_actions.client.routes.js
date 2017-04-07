@@ -19,7 +19,7 @@ angular.module('db_actions').config(['$stateProvider',
         }).
         state('editActions', {
             url: '/actions/:actionsId/edit',
-            templateUrl: 'modules/db_actions/views/view-actions.client.view.html'
+            templateUrl: 'modules/db_actions/views/edit-actions.client.view.html'
         });
     }
 ]);

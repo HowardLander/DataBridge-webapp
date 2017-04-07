@@ -40,7 +40,19 @@ exports.read = function(req, res) {
  * Update a Db signature
  */
 exports.update = function(req, res) {
-    console.log('in update');
+    console.log('in update for signature');
+    var signature = req.signature;
+    console.log('signature: ', signature);
+    signature = _.extend(signature, req.body);
+    signature.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                signature: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(signature);
+        }
+    });
 
 };
 

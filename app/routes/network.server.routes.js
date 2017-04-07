@@ -15,6 +15,7 @@ module.exports = function(app) {
    app.route('/network/:networkId')
     .get(network.read)
         .put(users.requiresLogin, network.update)
+        .post(users.requiresLogin, network.update)
         .delete(users.requiresLogin, network.delete);
 
     // Finish by binding the article middleware

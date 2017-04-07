@@ -22,8 +22,8 @@ angular.module('similarity').config(['$stateProvider',
             templateUrl: 'modules/similarity/views/launch-similarity.client.view.html'
         }).
         state('editSimilarities', {
-            url: '/similarity/:similaritysId/edit',
-            templateUrl: 'modules/similarity/views/view-similarity.client.view.html'
+            url: '/similarity/:similarityId/edit',
+            templateUrl: 'modules/similarity/views/edit-similarity.client.view.html'
         });
     }
 ]);

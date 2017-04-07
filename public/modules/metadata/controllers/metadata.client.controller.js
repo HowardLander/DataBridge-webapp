@@ -18,7 +18,7 @@ angular.module('metadata')
 
             // Redirect after save
             dbMetadata.$save(function(response) {
-                $location.path('metadata/create' + response._id);
+                $location.path('metadata');
 
                 // Clear form fields
                 $scope.className = '';
@@ -48,10 +48,11 @@ angular.module('metadata')
 
         // Update existing 
         $scope.update = function() {
-            var dbMetadata = $scope.signature;
+            var dbMetadata = $scope.metadata;
 
-            dbMetadata.$update(function() {
+            $scope.metadata.$save(function() {
                 $location.path('metadata/' + dbMetadata._id);
+                $location.path('metadata');
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });

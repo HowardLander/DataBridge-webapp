@@ -18,7 +18,7 @@ angular.module('signatures')
 
             // Redirect after save
             dbSignature.$save(function(response) {
-                $location.path('signatures/create' + response._id);
+                $location.path('signatures');
 
                 // Clear form fields
                 $scope.className = '';
@@ -48,10 +48,12 @@ angular.module('signatures')
 
         // Update existing Signature
         $scope.update = function() {
+            console.log('$scope on update: ', $scope);
             var dbSignature = $scope.signature;
 
-            dbSignature.$update(function() {
+            $scope.signature.$save(function() {
                 $location.path('signatures/' + dbSignature._id);
+                $location.path('signatures');
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });

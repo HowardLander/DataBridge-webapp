@@ -39,7 +39,19 @@ exports.read = function(req, res) {
  * Update a Db message
  */
 exports.update = function(req, res) {
-    console.log('in update');
+    console.log('in update in messages');
+    var message = req.message;
+    console.log('message: ', message);
+    message = _.extend(message, req.body);
+    message.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(message);
+        }
+    });
 
 };
 

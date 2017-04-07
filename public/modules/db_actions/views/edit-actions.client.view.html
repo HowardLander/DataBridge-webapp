@@ -1,48 +1,56 @@
 <section data-ng-controller="DbActionsController">
     <div class="page-header">
-        <h1>New Action</h1>
+        <h1>Edit Action</h1>
     </div>
     <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+        <form class="form-horizontal" data-ng-init="findOne()" data-ng-submit="update()" novalidate>
             <fieldset>
                 <div class="form-group">
                     <label class="control-label" for="currentMessage">Current Message</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="currentMessage" id="currentMessage" 
+                        <input type="text" data-ng-model="action.currentMessage" id="currentMessage" 
+                               data-ng-value="action.currentMessage"
                                class="form-control" placeholder="Current Message" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="nameSpace">Name Space</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="nameSpace" id="nameSpace" 
+                        <input type="text" data-ng-model="action.nameSpace" id="nameSpace" 
+                               data-ng-value="action.nameSpace"
                                class="form-control" placeholder="Name Space" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="Header 1">Header 1</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="header1Key" id="header1Key" 
-                               class="form-control" placeholder="Header 1 Key">
-                        <input type="text" data-ng-model="header1Value" id="header1Value" 
-                               class="form-control" placeholder="Header 1 Value">
+                        <input type="text" data-ng-model="action.header1Key" id="header1Key" 
+                               data-ng-value="action.headers[0] | headerKey"
+                               class="form-control" placeholder="action.headers[0] | headerKey">
+                        <input type="text" data-ng-model="action.header1Value" id="header1Value" 
+                               data-ng-value="action.headers[0] | valueKey"
+                               class="form-control" placeholder="action.headers[0] | valueKey">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="Header 2">Header 2</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="header2Key" id="header2" 
+                        <input type="text" data-ng-model="action.header2Key" id="header2" 
+                               data-ng-value="action.headers[1] | headerKey"
                                class="form-control" placeholder="Header 2 Key">
-                        <input type="text" data-ng-model="header2Value" id="header2Value" 
+                        <input type="text" data-ng-model="action.header2Value" id="header2Value" 
+                               data-ng-value="action.headers[1] | valueKey"
                                class="form-control" placeholder="Header 2 Value">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="Header 3">Header 3</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="header3Key" id="header3" 
+                        <input type="text" data-ng-model="action.header3Key" id="header3" 
+                               data-ng-value="action.headers[2] | headerKey"
                                class="form-control" placeholder="Header 3 Key">
-                        <input type="text" data-ng-model="header3Value" id="header3Value" 
+                        <input type="text" data-ng-model="action.header3Value" id="header3Value" 
+                               data-ng-value="action.headers[2] | valueKey"
                                class="form-control" placeholder="Header 3 Value">
                     </div>
                 </div>

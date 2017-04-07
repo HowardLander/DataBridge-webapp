@@ -15,6 +15,7 @@ module.exports = function(app) {
    app.route('/signatures/:signatureId')
     .get(signature.read)
         .put(users.requiresLogin, signature.update)
+        .post(users.requiresLogin, signature.update)
         .delete(users.requiresLogin, signature.delete);
 
     // Finish by binding the article middleware

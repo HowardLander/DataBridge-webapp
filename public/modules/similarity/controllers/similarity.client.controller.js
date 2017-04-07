@@ -20,7 +20,7 @@ angular.module('similarity')
 
             // Redirect after save
             dbSimilarity.$save(function(response) {
-                $location.path('similarity/create' + response._id);
+                $location.path('similarity');
 
                 // Clear form fields
                 $scope.className = '';
@@ -50,13 +50,15 @@ angular.module('similarity')
 
         // Update existing Similarity
         $scope.update = function() {
+            console.log('$scope.similarity on update: ', $scope.similarity);
             var dbSimilarity = $scope.similarity;
 
-            dbSimilarity.$update(function() {
-                $location.path('similarity/' + dbSimilarity._id);
-            }, function(errorResponse) {
-                $scope.error = errorResponse.data.message;
-            });
+             $scope.similarity.$save(function() {
+              $location.path('similarity/' + dbSimilarity._id);
+              $location.path('similarity');
+          },function(errorResponse) {
+              $scope.error = errorResponse.data.message;
+          });
         };
 
         // Find a list of Similarity
@@ -66,7 +68,8 @@ angular.module('similarity')
         };
         // Find existing Category
         $scope.findOne = function() {
-            console.log('findOne: ' , $stateParams.similarityId);
+            console.log('findOne for similarity: ' , $stateParams.similarityId);
+            console.log('scope: ', $scope);
             $scope.similarity = DbSimilarity.get.query({
                 similarityId: $stateParams.similarityId
             });

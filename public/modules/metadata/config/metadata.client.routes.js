@@ -23,7 +23,7 @@ angular.module('metadata').config(['$stateProvider',
         }).
         state('editMetadata', {
             url: '/metadata/:metadataId/edit',
-            templateUrl: 'modules/metadata/views/view-metadata.client.view.html'
+            templateUrl: 'modules/metadata/views/edit-metadata.client.view.html'
         });
     }
 ]);

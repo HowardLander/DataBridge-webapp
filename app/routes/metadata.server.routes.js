@@ -15,6 +15,7 @@ module.exports = function(app) {
    app.route('/metadata/:metadataId')
     .get(metadata.read)
         .put(users.requiresLogin, metadata.update)
+        .post(users.requiresLogin, metadata.update)
         .delete(users.requiresLogin, metadata.delete);
 
     // Finish by binding the article middleware

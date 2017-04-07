@@ -15,6 +15,7 @@ module.exports = function(app) {
    app.route('/similarity/:similarityId')
     .get(similarity.read)
         .put(users.requiresLogin, similarity.update)
+        .post(users.requiresLogin, similarity.update)
         .delete(users.requiresLogin, similarity.delete);
 
     // Finish by binding the article middleware

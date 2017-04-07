@@ -26,7 +26,7 @@ angular.module('messages')
          
             // Redirect after save
             dbMessage.$save(function(response) {
-                $location.path('messages/create' + response._id);
+                $location.path('messages');
 
                 // Clear form fields
                 $scope.message = '';
@@ -62,8 +62,9 @@ angular.module('messages')
         $scope.update = function() {
             var dbMessage = $scope.message;
 
-            dbMessage.$update(function() {
+            dbMessage.$save(function() {
                 $location.path('messages/' + dbMessage._id);
+                $location.path('messages');
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });

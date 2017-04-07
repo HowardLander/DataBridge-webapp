@@ -12,6 +12,7 @@ module.exports = function(app) {
    app.route('/actions/:actionId')
     .get(action.read)
         .put(users.requiresLogin, action.update)
+        .post(users.requiresLogin, action.update)
         .delete(users.requiresLogin, action.delete);
 
     // Finish by binding the article middleware

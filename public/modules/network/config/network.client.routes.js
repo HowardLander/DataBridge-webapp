@@ -23,7 +23,7 @@ angular.module('network').config(['$stateProvider',
         }).
         state('editNetwork', {
             url: '/network/:networkId/edit',
-            templateUrl: 'modules/network/views/view-network.client.view.html'
+            templateUrl: 'modules/network/views/edit-network.client.view.html'
         });
     }
 ]);

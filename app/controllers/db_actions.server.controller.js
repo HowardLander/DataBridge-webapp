@@ -39,7 +39,19 @@ exports.read = function(req, res) {
  * Update a Db action
  */
 exports.update = function(req, res) {
-    console.log('in update');
+    console.log('in update action');
+    var action = req.action;
+    console.log('action: ', action);
+    action = _.extend(action, req.body);
+    action.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                action: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(action);
+        }
+    });
 
 };
 

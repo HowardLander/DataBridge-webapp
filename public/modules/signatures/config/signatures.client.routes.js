@@ -22,8 +22,8 @@ angular.module('signatures').config(['$stateProvider',
             templateUrl: 'modules/signatures/views/launch-signatures.client.view.html'
         }).
         state('editSignatures', {
-            url: '/signatures/:signaturesId/edit',
-            templateUrl: 'modules/signatures/views/view-signatures.client.view.html'
+            url: '/signatures/:signatureId/edit',
+            templateUrl: 'modules/signatures/views/edit-signatures.client.view.html'
         });
     }
 ]);

@@ -1,28 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Signatures </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<STYLE TYPE="text/css">
+</STYLE>
+</head>
 <section data-ng-controller="DbNetworkController">
     <div class="page-header">
-        <h1>New Network Analyses Algorithm</h1>
+        <h1>Edit Network Algorithm</h1>
     </div>
     <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+        <form class="form-horizontal"  data-ng-init="findOne()" data-ng-submit="update()" novalidate>
             <fieldset>
                 <div class="form-group">
-                    <label class="control-label" for="className">Class Name</label>
+                    <label class="control-label" for="className">Name</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="className" id="className" 
-                               class="form-control" placeholder="Class Name" required>
+                        <input type="text" data-ng-model="network.className" id="name"
+                               data-ng-value=network.className
+                               class="form-control" placeholder="Similarity" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="type">Type</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="type" id="type" 
+                        <input type="text" data-ng-model="network.type" id="type"
+                               data-ng-value=network.type
                                class="form-control" placeholder="Type" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="description">Description</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="description" id="description" 
+                        <input type="text" data-ng-model="network.description" id="description"
+                               data-ng-value=network.description
                                class="form-control" placeholder="Description" required>
                     </div>
                 </div>
@@ -35,7 +50,7 @@
             </fieldset>
         </form>
     </div>
-   <div class="pull-right">
+    <div class="pull-right">
         <a class="btn btn-primary" href="/#!/network">
             <i class="glyphicon glyphicon-home"></i>
         </a>

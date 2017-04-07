@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title> Actions </title>
+<title> Messages </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -38,7 +38,7 @@ a:hover {
 <body>
 
 <section data-ng-controller="DbMessagesController" data-ng-init="find()">
-    <h1> Current messages</h1>
+    <h1> Current Messages</h1>
     <div>
       <ul style="list-style:none;padding:0px;" data-ng-repeat="message in messages | orderBy : 'message'">
          <li> <a data-ng-href="#!/messages/{{message._id}}"<B> {{ message.message }} </B></a></li>
@@ -52,11 +52,8 @@ a:hover {
       </ul>
     </div>
     <div class="pull-right">
-        <a class="btn btn-primary" href="/#!/messages/{{message._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-        </a>
-        <a class="btn btn-primary" data-ng-click="remove();">
-            <i class="glyphicon glyphicon-trash"></i>
+        <a class="btn btn-primary" href="/#!/messages/create">
+            <i class="glyphicon glyphicon-plus"></i>
         </a>
     </div>
 </section>

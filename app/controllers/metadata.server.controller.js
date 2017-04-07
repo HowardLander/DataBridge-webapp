@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 /**
- * Create a Db signature
+ * Create a Db metadata
  */
 exports.create = function(req, res) {
     console.log('in create: ', req.metadata);
@@ -29,7 +29,7 @@ exports.create = function(req, res) {
 };
 
 /**
- * Show the current Db signature
+ * Show the current Db metadata
  */
 exports.read = function(req, res) {
     console.log('in read: ', req.metadata);
@@ -37,15 +37,27 @@ exports.read = function(req, res) {
 };
 
 /**
- * Update a Db signature
+ * Update a Db metadata
  */
 exports.update = function(req, res) {
-    console.log('in update');
+    console.log('in update for metadata');
+    var metadata = req.metadata;
+    console.log('metadata: ', metadata);
+    metadata = _.extend(metadata, req.body);
+    metadata.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                metadata: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(metadata);
+        }
+    });
 
 };
 
 /**
- * Delete an Db signature
+ * Delete an Db metadata
  */
 exports.delete = function(req, res) {
     console.log('in delete');
@@ -64,7 +76,7 @@ exports.delete = function(req, res) {
 };
 
 /**
- * List of Db signatures
+ * List of Db metadata
  */
 exports.list = function(req, res) {
     console.log('in list');
@@ -83,7 +95,7 @@ exports.metadataByID = function(req, res, next, id) {
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).send({
-            signature: 'Signature is invalid'
+            metadata: 'Metadata is invalid'
         });
     }
 
@@ -101,7 +113,7 @@ exports.metadataByID = function(req, res, next, id) {
 
 exports.launch = function(req, res) {
     console.log('in execute');
-    console.log('signatureId: ', req.body.signatureId);
+    console.log('metadata: ', req.body.metadata);
     console.log('className: ', req.body.className);
     console.log('nameSpace: ', req.body.nameSpace);
     console.log('input: ', req.body.input);

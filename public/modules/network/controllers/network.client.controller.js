@@ -48,10 +48,11 @@ angular.module('network')
 
         // Update existing 
         $scope.update = function() {
-            var dbNetwork = $scope.signature;
+            var dbNetwork = $scope.network;
 
-            dbNetwork.$update(function() {
+            $scope.network.$save(function() {
                 $location.path('network/' + dbNetwork._id);
+                $location.path('network');
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
