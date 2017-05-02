@@ -13,6 +13,9 @@ module.exports = function(app) {
     app.route('/search/algorithms')
       .get(search.algorithms);
 
+    app.route('/search/instanceFinder')
+      .get(search.instanceFinder);
+
    app.route('/search/launch')
       .get(users.requiresLogin, search.launch);
 

@@ -13,7 +13,7 @@ angular.module('network').factory('DbNetwork', ['$resource',
             query: { method: 'PUT' }
            }),
            execute: $resource('network/:networkId/launch', { networkId: '@_id' }, {
-            query: { method: 'PUT' }
+            query: { method: 'GET' }
         })
     };
   }

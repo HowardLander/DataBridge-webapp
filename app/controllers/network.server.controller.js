@@ -7,8 +7,10 @@ var mongoose = require('mongoose'),
     errorHandler = require('./errors.server.controller'),
     amqp = require('amqplib'),
     DBNetwork = mongoose.model('DbNetwork'),
+    express = require('express'),
     _ = require('lodash');
 
+var url = require('url');
 /**
  * Create a Db network
  */
@@ -112,13 +114,74 @@ exports.networkByID = function(req, res, next, id) {
     });
 };
 
+function publisher (req,res) {
+var amqp = require('amqplib');
+var basename = require('path').basename;
+var Promise = require('bluebird');
+var uuid = require('node-uuid');
+var parsedURL = url.parse(req.url, true);
+var app = express();
+console.log('in network publisher with query', parsedURL.query);
+console.log('in network publisher with ', parsedURL.query.nameSpace);
+
+amqp.connect(req.app.locals.AMQPHost).then(function(conn) {
+  return conn.createChannel().then(function(ch) {
+    return new Promise(function(resolve) {
+      var corrId = uuid();
+      function maybeAnswer(msg) {
+        if (msg.properties.correlationId === corrId) {
+          //resolve(msg.content.toString());
+          resolve(msg);
+        }
+      }
+
+      var ok = ch.assertQueue('', {exclusive: true})
+        .then(function(qok) { return qok.queue; });
+
+      ok = ok.then(function(queue) {
+        return ch.consume(queue, maybeAnswer, {noAck: true})
+          .then(function() { return queue; });
+      });
+
+      ok = ok.then(function(queue) {
+        console.log(' [x] Requesting service');
+        var sendHeaders = {};
+        var nameHeader = 'Run.SNA.Algorithm.RPC.NetworkDB';
+        sendHeaders.type = 'databridge';
+        sendHeaders.subtype = 'network';
+        sendHeaders.name = nameHeader;
+        sendHeaders.nameSpace = parsedURL.query.nameSpace;
+        sendHeaders.params = parsedURL.query.params;
+        sendHeaders.className = parsedURL.query.className;
+        sendHeaders.similarityId = parsedURL.query.similarityId;
+        sendHeaders.type = parsedURL.query.type;
+        ch.sendToQueue(req.app.locals.AMQPRPCExchange, new Buffer('test'), {
+          correlationId: corrId, replyTo: queue, headers: sendHeaders
+        });
+      });
+    });
+  })
+  .then(function(result) {
+    // This doesn't seem like it should be needed, but it is!
+    result.content = result.content.toString();
+    console.log('result: ', result.content);
+    //result =  res.json(result.content);
+    res.json(result);
+  })
+  .finally(function() { conn.close(); });
+}).catch(console.warn);
+}
+
 exports.launch = function(req, res) {
-    console.log('in execute');
+   console.log('in launch');
+   publisher(req, res);
+};
+
+exports.launch2 = function(req, res) {
+    console.log('in launch');
     console.log('similarityId: ', req.body.similarityId);
     console.log('className: ', req.body.className);
     console.log('nameSpace: ', req.body.nameSpace);
-    console.log('input: ', req.body.input);
-    console.log('parameters: ', req.body.parameters);
 
     var amqp = require('amqplib');
     var when = require('when');
@@ -146,7 +209,7 @@ exports.launch = function(req, res) {
           options.headers.nameSpace = req.body.nameSpace;
           options.headers.similarityId = req.body.similarityId;
           options.headers.params = req.body.parameters;
-          ch.publish(ex, '', new Buffer(message), options);
+          //ch.publish(ex, '', new Buffer(message), options);
           console.log(' [x] Sent event with options %s', options);
           return ch.close();
         });

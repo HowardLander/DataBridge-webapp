@@ -9,7 +9,8 @@ module.exports = function(app) {
       .post(users.requiresLogin, network.create);
 
    app.route('/network/launch')
-        .put(users.requiresLogin, network.launch);
+        .put(users.requiresLogin, network.launch)
+        .get(users.requiresLogin, network.launch);
 
     // the categoryId param is added to the params object for the request
    app.route('/network/:networkId')

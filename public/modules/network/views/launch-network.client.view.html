@@ -36,22 +36,55 @@ a:hover {
          <li style="padding:0px 0px 0px 10px"> <B>Type:</B> {{ network.type }} </li>
 
          <h3 style="padding:0px 0px 0px 10px">User provided information</h3> 
-         <div class="form-group">
-            <label style="padding:0px 0px 0px 10px" class="control-label">Name Space</label>
-            <input type="text" data-ng-model="nameSpace" id="nameSpace">
+         <div style="display: inline" class="form-group">
+            <b style="padding:0px 0px 0px 10px">Select a name space</b>
+            <select ng-model="selectedNameSpace" id="firstSelect"
+                data-ng-focus="findNamespaces();"
+                data-ng-change="findMetadata(selectedNameSpace.nameSpace);"
+                ng-options="item.nameSpace for item in nameSpaces">
+            </select>
          <div>
-         <div class="form-group">
-            <label style="padding:0px 0px 0px 10px" class="control-label">Similarity</label>
-            <input type="text" data-ng-model="similarity" id="similarity">
-         <div>
-         <div class="form-group">
-            <label style="padding:0px 0px 0px 10px" class="control-label">Parameters</label>
-            <input type="text" data-ng-model="parameters" id="parameters">
-         <div>
+       <p>
+       <b style="padding:0px 0px 0px 10px">Metadata analyses available for this name space</b>
+       <div>
+       <form action="">
+          <fieldset>
+             <div "padding:0px 0px 0px 10px" ng-repeat="item in metadata">
+                <input type ="checkbox" name={{item}} value={{item}}
+                ng-true-value=1 ng-false-value=0
+                ng-model="checked"
+                ng-click="findAlgorithms(item, $index, checked);"> <b>{{item}}</b>
+   
+                <div ng-show="{{checked}}==1" ng-repeat="algorithm in algorithms[$index]">
+                   &nbsp;&nbsp;&nbsp;<input type ="radio"
+                   name=algorithms value={{algorithm}}
+                   ng-true-value=1 ng-false-value=0
+                   ng-model="algo_checked"
+                   ng-click="findSimilarityInstances(item, $index, algo_checked, algorithm);"> {{algorithm}}
+   
+                   <div ng-show="{{algo_checked}}==={{algorithm}}" ng-repeat="instance in simInstances[$index]">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type ="radio"
+                      name=sims value={{instance._id}}
+                      ng-model="selectedSimId._id">
+                      {{instance._id | dateFromObjectId}}
+                   </div>
+                </div>
+            </div>
+
+          <label style="padding:0px 0px 0px 10px" class="control-label">Parameters</label>
+          <input type="text" data-ng-model="parameters" ng-trim="false" value=" " id="parameters"> <br/>
+       <input type="button" value="Submit" ng-click="execute( selectedNameSpace.nameSpace, parameters);">
+       <div ng-show="submitted">
+          <li><B> Status: {{ status }} </B></li>
+          <li><B> Results: {{ results | dateFromObjectId }} </B></li>
+       </div>
+      </div>
+    <div>
     </div>
-    <div class="pull-right">
-        <a class="btn btn-primary btn-lg" data-ng-click="outputFile=execute(network.className, nameSpace, similarity, parameters);">
-            <i class="glyphicon glyphicon-play-circle"></i>
-        </a>
+
+       </fieldset>
     </div>
+    </form>
 </section>
+<!-- 
+-->

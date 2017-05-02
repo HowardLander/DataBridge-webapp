@@ -12,6 +12,9 @@ angular.module('search').factory('DbSearch', ['$resource',
            findAlgorithms: $resource('search/algorithms', {  }, {
             query: { method: 'GET', isArray: true }
            }),
+           findInstances: $resource('search/instanceFinder', {  }, {
+            query: { method: 'GET', isArray: true }
+           }),
            execute: $resource('search/launch', { }, {
             query: { method: 'GET' }
         })

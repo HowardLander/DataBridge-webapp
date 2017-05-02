@@ -75,10 +75,14 @@ angular.module('namespaces' )
         };
     }
 ]).filter('dateFromObjectId', function() {
-
+   // Extract a Date from a mongo ID and return it in some reasonable format.
    return function (objectId) {
-          var  newVal = new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
-          return newVal.toString();
+          if (typeof(objectId) === 'string' || objectId instanceof String) {
+             var  newVal = new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
+             return newVal.toString();
+          } else {
+             return "";
+          }
       };
     });
 //  });

@@ -51,7 +51,6 @@ angular.module('search')
            var algorithm;
            console.log('searchURL: ', searchURL);
            console.log('nameSpace: ', nameSpace);
-     
            if (checkedAlgorithms.size === 0) {
               alert('Nothing to submit');
               return;
@@ -67,17 +66,19 @@ angular.module('search')
               console.log('algorithm: ', algorithm);
               console.log('nMatches: ', $scope.nMatches);
            }
-
-           
            DbSearch.execute.query({searchURL: searchURL, nameSpace: nameSpace, 
-                            params: params, algorithm: algorithm, nMatches: $scope.nMatches}, function(results){
+                            params: params, algorithm: algorithm, nMatches: $scope.nMatches}, 
+             function(results){
                 const jsonResults = results.content.toString();
                 $scope.showResults = true;
                 $scope.returnedData = JSON.parse(results.content);
-       });
-
+             });
         };
 
+        // This function is used to keep track of which of the algorithms
+        // are currently selected in the interface.  This is because at some
+        // point we may want to allow the user to specify a search that includes
+        // more than one specification.
         $scope.addToClicks = function(checked, metadata, algorithm){
                  console.log('checked is: ', checked);
                  console.log('metadata is: ', metadata);

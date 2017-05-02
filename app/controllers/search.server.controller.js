@@ -74,6 +74,27 @@ exports.algorithms = function(req, res) {
     });
 };
 
+/**
+ * Find the all the  similarity instances for a combination of params, nameSpace and class name.
+ */
+exports.instanceFinder = function(req, res) {
+    var parsedURL = url.parse(req.url, true);
+    console.log('in instances with ', parsedURL.query.nameSpace, parsedURL.query.params);
+    DBSimilarityInstance.find(
+        {'className' : parsedURL.query.className, 
+         'nameSpace' : parsedURL.query.nameSpace, 
+         'params'    : parsedURL.query.params}).exec(function(err, dbsiminstance) {
+        if (err) {
+            return res.status(400).send({
+                signature: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            console.log(dbsiminstance);
+            res.json(dbsiminstance);
+        }
+    });
+};
+
 function bail(err) {
     console.error(err);
 }
