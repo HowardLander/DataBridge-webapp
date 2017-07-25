@@ -9,7 +9,8 @@ module.exports = function(app) {
       .post(users.requiresLogin, metadata.create);
 
    app.route('/metadata/launch')
-        .put(users.requiresLogin, metadata.launch);
+        .put(users.requiresLogin, metadata.launch)
+        .get(users.requiresLogin, metadata.launch);
 
     // the categoryId param is added to the params object for the request
    app.route('/metadata/:metadataId')

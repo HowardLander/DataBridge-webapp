@@ -13,7 +13,7 @@ angular.module('metadata').factory('DbMetadata', ['$resource',
             query: { method: 'PUT' }
            }),
            execute: $resource('metadata/:metadataId/launch', { metadataId: '@_id' }, {
-            query: { method: 'PUT' }
+            query: { method: 'GET' }
         })
     };
   }

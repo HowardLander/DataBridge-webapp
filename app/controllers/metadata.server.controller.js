@@ -7,8 +7,10 @@ var mongoose = require('mongoose'),
     errorHandler = require('./errors.server.controller'),
     amqp = require('amqplib'),
     DBMetadata = mongoose.model('DbMetadata'),
+   express = require('express'),
     _ = require('lodash');
 
+var url = require('url');
 /**
  * Create a Db metadata
  */
@@ -111,7 +113,71 @@ exports.metadataByID = function(req, res, next, id) {
     });
 };
 
+
+function publisher (req,res) {
+var amqp = require('amqplib');
+var basename = require('path').basename;
+var Promise = require('bluebird');
+var uuid = require('node-uuid');
+var parsedURL = url.parse(req.url, true);
+var app = express();
+console.log('in metadata publisher with query', parsedURL.query);
+console.log('in metadata publisher with ', parsedURL.query.nameSpace);
+
+amqp.connect(req.app.locals.AMQPHost).then(function(conn) {
+  return conn.createChannel().then(function(ch) {
+    return new Promise(function(resolve) {
+      var corrId = uuid();
+      function maybeAnswer(msg) {
+        if (msg.properties.correlationId === corrId) {
+          //resolve(msg.content.toString());
+          resolve(msg);
+        }
+      }
+
+      var ok = ch.assertQueue('', {exclusive: true})
+        .then(function(qok) { return qok.queue; });
+
+      ok = ok.then(function(queue) {
+        return ch.consume(queue, maybeAnswer, {noAck: true})
+          .then(function() { return queue; });
+      });
+
+      ok = ok.then(function(queue) {
+        console.log(' [x] Requesting service');
+        console.log(' replyTo is: ', queue);
+        var sendHeaders = {};
+        var nameHeader = 'Insert.Metadata.Java.FileWithParams.MetadataDB.RPC';
+        sendHeaders.type = 'databridge';
+        sendHeaders.subtype = 'ingestmetadata';
+        sendHeaders.name = nameHeader;
+        sendHeaders.nameSpace = parsedURL.query.nameSpace;
+        sendHeaders.params = parsedURL.query.parameters;
+        sendHeaders.className = parsedURL.query.className;
+        sendHeaders.inputFile = parsedURL.query.input;
+        ch.sendToQueue(req.app.locals.AMQPIngestRPCExchange, new Buffer('test'), {
+          correlationId: corrId, replyTo: queue, headers: sendHeaders
+        });
+      });
+    });
+  })
+  .then(function(result) {
+    // This doesn't seem like it should be needed, but it is!
+    result.content = result.content.toString();
+    console.log('result: ', result.content);
+    //result =  res.json(result.content);
+    res.json(result);
+  })
+  .finally(function() { conn.close(); });
+}).catch(console.warn);
+}
+
 exports.launch = function(req, res) {
+   console.log('in launch');
+   publisher(req, res);
+};
+
+exports.launch.prv = function(req, res) {
     console.log('in execute');
     console.log('metadata: ', req.body.metadata);
     console.log('className: ', req.body.className);

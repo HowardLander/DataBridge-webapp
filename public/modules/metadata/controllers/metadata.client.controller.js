@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('metadata')
-  .controller('DbMetadataController', ['$scope', '$stateParams', '$location', 'Utilities', 'Authentication', 'DbMetadata', 
-    function($scope, $stateParams, $location, Utilities, Authentication, DbMetadata) {
+  .controller('DbMetadataController', ['$scope', '$stateParams', '$location', 'Utilities', 'Authentication', 'DbMetadata', 'DbNameSpaces',
+    function($scope, $stateParams, $location, Utilities, Authentication, DbMetadata, DbNameSpaces) {
         $scope.values = {};
 
         // Create new Category
@@ -41,7 +41,7 @@ angular.module('metadata')
                 }
             } else {
                 $scope.metadata.$remove(function() {
-                    $location.path('signatures');
+                    $location.path('metadata');
                 });
             }
         };
@@ -72,18 +72,38 @@ angular.module('metadata')
             console.log('scope.metadata: ', $scope.metadata);
         };
 
-        $scope.execute = function(className, input, output, parameters) {
+       // Get a list of name spaces
+        $scope.findNamespaces = function() {
+            console.log('in findNameSpaces: ');
+            $scope.nameSpaces = DbNameSpaces.query.query();
+            console.log('nameSpaces: ', $scope.nameSpaces);
+        };
+
+        $scope.execute = function(nameSpace, className, input, parameters) {
+            console.log('nameSpace: ' , nameSpace);
             console.log('className: ' , className);
-            console.log('stateParams: ' , $stateParams);
+            console.log('input: ' , input);
+            if (typeof(parameters) === 'undefined') {
+               parameters ='';
+            }
+            console.log('parameters: ' , parameters);
            
             DbMetadata.execute.query({
-                metadataId: $stateParams.metadataId,
+                nameSpace: nameSpace,
                 className: className,
                 input: input,
-                output: output,
                 parameters: parameters
-            });
-        };
+            }, function(results){
+               const jsonResults = JSON.parse(results.content);
+                $scope.submitted = true;
+                console.log('high level results: ', results);
+                console.log('results struct ', results.content);
+                console.log('results are: ', jsonResults.results);
+                console.log('status is: ', jsonResults.status);
+                $scope.status = jsonResults.status;
+                $scope.results = jsonResults.results;
+        });
+      };
     }
 ]).service('Utilities', function() {
 

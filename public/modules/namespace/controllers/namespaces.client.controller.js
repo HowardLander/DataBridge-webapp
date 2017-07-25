@@ -81,7 +81,7 @@ angular.module('namespaces' )
              var  newVal = new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
              return newVal.toString();
           } else {
-             return "";
+             return '';
           }
       };
     });

@@ -11,7 +11,7 @@
 a:link {
     color: black;
     background-color: transparent;
-    text-decoration: none;
+    text-decoration: underline;
     font-weight: bold;
 }
 a:visited {
@@ -36,22 +36,37 @@ a:hover {
          <li style="padding:0px 0px 0px 10px"> <B>Type:</B> {{ metadata.type }} </li>
 
          <h3 style="padding:0px 0px 0px 10px">User provided information</h3> 
+         <div style="display: inline" class="form-group">
+            <b style="padding:0px 0px 0px 10px">Select a name space</b>
+            <select ng-model="selectedNameSpace" id="firstSelect"
+                data-ng-focus="findNamespaces();"
+                data-ng-change="find();"
+                ng-options="item.nameSpace for item in nameSpaces">
+            </select>
+            <b style="padding:0px 0px 0px 10px">or <a href="#!/namespaces/create">Add a name space</a></b>
+         <div>
+
+         <div style="display: inline" class="form-group">
+            <b style="padding:0px 0px 0px 10px">Select an algorithm</b>
+            <select ng-model="selectedAlgorithm" id="firstSelectAlg"
+                data-ng-focus="find();"
+                ng-options="item.className for item in metadatas">
+            </select>
+            <b style="padding:0px 0px 0px 10px">or <a href="#!/metadata/create">Add an algorithm</a></b>
+         <div>
+
          <div class="form-group">
-            <label style="padding:0px 0px 0px 10px" class="control-label">Input</label>
+            <label style="padding:0px 0px 0px 10px" class="control-label">Input File</label>
             <input type="text" data-ng-model="input" id="input">
          <div>
          <div class="form-group">
-            <label style="padding:0px 0px 0px 10px" class="control-label">Output</label>
-            <input type="text" data-ng-model="output" id="output">
-         <div>
-         <div class="form-group">
             <label style="padding:0px 0px 0px 10px" class="control-label">Parameters</label>
-            <input type="text" data-ng-model="parameters" id="parameters">
+            <input type="text" data-ng-model="parameters" id="parameters" value=" ">
          <div>
     </div>
-    <div class="pull-right">
-        <a class="btn btn-primary btn-lg" data-ng-click="outputFile=execute(metadata.className, input, output, parameters);">
-            <i class="glyphicon glyphicon-play-circle"></i>
-        </a>
-    </div>
+      <input type="button" value="Submit" ng-click="execute(selectedNameSpace.nameSpace, selectedAlgorithm.className, input, parameters);">
+       <div ng-show="submitted">
+          <li><B> Status: {{ status }} </B></li>
+          <li><B> Results: {{ results }} </B></li>
+       </div>
 </section>
