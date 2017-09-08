@@ -1,0 +1,84 @@
+<section data-ng-controller="DbLanesController">
+    <div class="page-header">
+        <h1>Edit Lane </h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal"  data-ng-init="findOne()" data-ng-submit="update()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="laneName">Lane Name</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="lane.name" id="laneName" 
+                               data-ng-value=lane.name
+                               class="form-control" placeholder="Lane Name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="lane.description" id="description" 
+                               data-ng-value=lane.description 
+                               class="form-control" placeholder="Description" required>
+                    </div>
+                </div>
+
+                <div class="form-group" data-ng-init="findIngest()">
+                    <label class="control-label" for="ingestExe">Ingest Executable</label>
+                    <div class="controls">
+                        <select ng-model="lane.ingestImpl" id="ingestExe" 
+                            ng-options="item.className as item.className for item in ingestImpls">
+                        </select>
+                        <input type="text" data-ng-model="lane.ingestParams" id="ingestParams"
+                               class="form-control" placeholder="Ingest Params">
+                    </div>
+                </div>
+
+                <div class="form-group" data-ng-init="findSignatures()">
+                    <label class="control-label" for="signatureExe">Signature Executable</label>
+                    <div class="controls">
+                        <select ng-model="lane.signatureImpl" id="signatureExe"
+                            ng-options="item.className as item.className for item in signatureImpls">
+                        </select>
+                        <input type="text" data-ng-model="lane.signatureParams" id="signatureParams"
+                               class="form-control" placeholder="Signature Params">
+                    </div>
+                </div>
+
+                <div class="form-group" data-ng-init="findSimilarities()">
+                    <label class="control-label" for="similarityExe">Similarity Executable</label>
+                    <div class="controls">
+                        <select ng-model="lane.similarityImpl" id="similarityExe"
+                            ng-options="item.className as item.className for item in similarityImpls">
+                        </select>
+                        <input type="text" data-ng-model="lane.similarityParams" id="similarityParams"
+                               class="form-control" placeholder="Similarity Params">
+                    </div>
+                </div>
+
+                <div class="form-group" data-ng-init="findSNA()">
+                    <label class="control-label" for="SNAExe">SNA Executable</label>
+                    <div class="controls">
+                        <select ng-model="lane.SNAImpl" id="SNAExe"
+                            ng-options="item.className as item.className for item in SNAImpls">
+                        </select>
+                        <input type="text" data-ng-model="lane.SNAParams" id="SNAParams"
+                               class="form-control" placeholder="SNA Params">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default">
+                </div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="pull-right">
+        <a class="btn btn-primary" href="/#!/lanes">
+            <i class="glyphicon glyphicon-home"></i>
+        </a>
+    </div>
+</section>

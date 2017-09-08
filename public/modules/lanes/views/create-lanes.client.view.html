@@ -1,0 +1,90 @@
+<section data-ng-controller="DbLanesController">
+    <div class="page-header">
+        <h1>New Lane</h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="laneName">Lane Name</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="laneName" id="laneName" 
+                               class="form-control" placeholder="Lane Name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="description" id="description" 
+                               class="form-control" placeholder="Description" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="nameSpace">Name Space</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="nameSpace" id="nameSpace" 
+                               class="form-control" placeholder="Name Space" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Ingest Executable">Ingest Executable</label>
+                    <div class="controls">
+                        <select ng-model="ingestExe" id="ingestExe"
+                            data-ng-focus="findIngest();"
+                            ng-options="item.className for item in ingestImpls">
+                        </select>
+                        <input type="text" data-ng-model="ingestParams" id="ingestParams" 
+                               class="form-control" placeholder="Ingest Params">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Signature Executable">Signature Executable</label>
+                    <div class="controls">
+                        <select ng-model="signatureExe" id="signatureExe"
+                            data-ng-focus="findSignatures();"
+                            ng-options="item.className for item in signatureImpls">
+                        </select>
+                        <input type="text" data-ng-model="signatureParams" id="signatureParams"
+                               class="form-control" placeholder="Signature Params">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Similarity Executable">Similarity Executable</label>
+                    <div class="controls">
+                        <select ng-model="similarityExe" id="similarityExe"
+                            data-ng-focus="findSimilarities();"
+                            ng-options="item.className for item in similarityImpls">
+                        </select>
+                        <input type="text" data-ng-model="similarityParams" id="similarityParams"
+                               class="form-control" placeholder="Similarity Params">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="SNA Executable">SNA Executable</label>
+                    <div class="controls">
+                        <select ng-model="SNAExe" id="SNAExe"
+                            data-ng-focus="findSNA();"
+                            ng-options="item.className for item in SNAImpls">
+                        </select>
+                        <input type="text" data-ng-model="SNAParams" id="SNAParams"
+                               class="form-control" placeholder="SNA Params">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox"> Enabled</label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default">
+                </div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="pull-right">
+        <a class="btn btn-primary" href="/#!/lanes">
+            <i class="glyphicon glyphicon-home"></i>
+        </a>
+    </div>
+</section>

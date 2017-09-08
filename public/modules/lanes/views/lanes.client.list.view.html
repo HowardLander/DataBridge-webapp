@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Name Spaces</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<STYLE TYPE="text/css"> 
+<!-- 
+.indented 
+{ 
+   padding-left: 20pt; 
+   padding-right: 20pt; 
+} 
+--> 
+a:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover {
+    color: blue;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+</STYLE>
+</head>
+<body>
+
+<section data-ng-controller="DbLanesController" data-ng-init="find()">
+    <h1> Current Lanes</h1>
+    <div>
+      <ul style="list-style:none;padding:0px;" data-ng-repeat="lane in lanes | orderBy : 'lane'">
+         <li> <a data-ng-href="#!/lanes/{{lane._id}}"<B> Name: {{ lane.name }} </B></a></li>
+         <li style="padding:0px 0px 0px 0px"> <B>Description:</B> {{ lane.description }} </li>
+         <li style="padding:0px 0px 0px 0px"> <B>Date Added:</B> {{ lane._id | dateFromObjectId }} </li>
+      </ul>
+    </div>
+    <div class="pull-right">
+        <a class="btn btn-primary" href="/#!/lanes/create">
+            <i class="glyphicon glyphicon-plus"></i>
+        </a>
+    </div>
+</section>
+</body>
+</html>
