@@ -151,7 +151,7 @@ amqp.connect(req.app.locals.AMQPHost).then(function(conn) {
         sendHeaders.subtype = 'network';
         sendHeaders.name = nameHeader;
         sendHeaders.nameSpace = parsedURL.query.nameSpace;
-        sendHeaders.params = parsedURL.query.params;
+        sendHeaders.params = parsedURL.query.parameters;
         sendHeaders.className = parsedURL.query.className;
         sendHeaders.similarityId = parsedURL.query.similarityId;
         sendHeaders.type = parsedURL.query.type;

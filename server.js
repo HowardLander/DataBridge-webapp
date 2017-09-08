@@ -5,6 +5,8 @@
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),
+    https = require('https'),
+    fs = require('fs'),
 	chalk = require('chalk');
 
 /**
@@ -27,7 +29,12 @@ var app = require('./config/express')(db);
 require('./config/passport')();
 
 // Start the app by listening on <port>
-app.listen(config.port);
+//app.listen(config.port);
+https.createServer({
+   key: fs.readFileSync('/home/howard/.ssh/star_renci_org.key'),
+   cert: fs.readFileSync('/home/howard/.ssh/star_renci_org.crt')
+}, app).listen(3000);
+
 
 // Expose app
 exports = module.exports = app;

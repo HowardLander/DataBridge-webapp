@@ -2,12 +2,13 @@
 
 module.exports = {
     // config to access the mongoDB using name/password authentication
-	db: 'mongodb://user:password@yourhost:yourport/yourdb',
+	db: 'mongodb://DataBridgeGUI:IAmTheWalrus@localhost:27389/install-test',
 
     // The host and exchange info for the AMQP queues.
-    AMQPHost: 'amqp://yourhost',
-    AMQPRPCExchange: 'your-rpcQueue', 
-    AMQPExchange: 'yournormalExchange', 
+    AMQPHost: 'amqp://localhost',
+    AMQPRPCExchange: 'network-test-howard-rpcQueue', 
+    AMQPIngestRPCExchange: 'ingest-test-howard-rpcQueue', 
+    AMQPExchange: 'integration-test-howard', 
 
 	app: {
 		title: 'DataBridge'

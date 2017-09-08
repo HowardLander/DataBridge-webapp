@@ -5,6 +5,10 @@ angular.module('similarity')
     function($scope, $stateParams, $location, Utilities, Authentication, DbSimilarity) {
         $scope.values = {};
 
+        // Set up the options used for setting the type of an algorithm
+        // This should be in a global somewhere...
+        $scope.typeOptions = [{'name': 'Class'}, {'name': 'Executable'}];
+
         // Create new Category
         $scope.create = function() {
             console.log('className: ' , this.className);
@@ -12,7 +16,7 @@ angular.module('similarity')
             // Create new object
             var dbSimilarity = new DbSimilarity.query ({
                 className: this.className,
-                type: this.type,
+                type: this.type.name,
                 description: this.description
             });
 

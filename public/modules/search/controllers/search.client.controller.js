@@ -9,6 +9,7 @@ angular.module('search')
         $scope.algorithms = [];
         $scope.showResults = false;
         $scope.nMatches = 10;
+        $scope.authentication = Authentication;
         var checkedAlgorithms = new Set();
 
         // Find a list of relevant nameSpaces
@@ -65,6 +66,7 @@ angular.module('search')
               console.log('params: ', params);
               console.log('algorithm: ', algorithm);
               console.log('nMatches: ', $scope.nMatches);
+              console.log('user: ', $scope.authentication);
            }
            DbSearch.execute.query({searchURL: searchURL, nameSpace: nameSpace, 
                             params: params, algorithm: algorithm, nMatches: $scope.nMatches}, 

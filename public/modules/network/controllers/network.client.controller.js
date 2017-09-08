@@ -16,12 +16,16 @@ angular.module('network')
         $scope.results = {};
         $scope.submitted = false;
 
+        // Set up the options used for setting the type of an algorithm
+        // This should be in a global somewhere...
+        $scope.typeOptions = [{'name': 'Class'}, {'name': 'Executable'}];
+
         // Create new Category
         $scope.create = function() {
             // Create new object
             var dbNetwork = new DbNetwork.query ({
                 className: this.className,
-                type: this.type,
+                type: this.type.name,
                 description: this.description
             });
             console.log('className: ' , this.className);

@@ -12,13 +12,16 @@
                                class="form-control" placeholder="Class Name" required>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label class="control-label" for="Type">Type</label>
+                    <label class="control-label" for="type">Select Type</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="type" id="type" 
-                               class="form-control" value="java class" required>
+                        <select ng-model="type" id="type"
+                            ng-options="item.name for item in typeOptions">
+                        </select>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="control-label" for="description">Description</label>
                     <div class="controls">

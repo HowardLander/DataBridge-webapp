@@ -13,7 +13,7 @@ var mongoose = require('mongoose'),
  * Create a Db signature
  */
 exports.create = function(req, res) {
-    console.log('in create: ', req.signature);
+    console.log('in create: ', req.body);
     var signature = new DBSignature(req.body);
 
     signature.save(function(err) {
