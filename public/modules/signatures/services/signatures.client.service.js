@@ -13,7 +13,7 @@ angular.module('signatures').factory('DbSignatures', ['$resource',
             query: { method: 'PUT' }
            }),
            execute: $resource('signatures/:signatureId/launch', { signatureId: '@_id' }, {
-            query: { method: 'PUT' }
+            query: { method: 'GET' }
         })
     };
   }

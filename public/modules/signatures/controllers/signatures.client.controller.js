@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('signatures')
-  .controller('DbSignaturesController', ['$scope', '$stateParams', '$location', 'Utilities', 'Authentication', 'DbSignatures', 
-    function($scope, $stateParams, $location, Utilities, Authentication, DbSignature) {
+  .controller('DbSignaturesController', ['$scope', '$stateParams', '$location', 'Utilities', 'Authentication', 'DbSignatures', 'DbNameSpaces',
+    function($scope, $stateParams, $location, Utilities, Authentication, DbSignature, DbNameSpaces) {
         $scope.values = {};
 
         // Set up the options used for setting the type of an algorithm
@@ -77,16 +77,35 @@ angular.module('signatures')
             console.log('scope.signature: ', $scope.signature);
         };
 
-        $scope.execute = function(className, nameSpace, input, parameters) {
+       // Get a list of name spaces
+        $scope.findNamespaces = function() {
+            console.log('in findNameSpaces: ');
+            if (typeof($scope.nameSpaces) === 'undefined') {
+               $scope.nameSpaces = DbNameSpaces.query.query();
+            }
+            console.log('nameSpaces: ', $scope.nameSpaces);
+        };
+
+        $scope.execute = function(className, sourceNameSpace, targetNameSpace, parameters) {
             console.log('className: ' , className);
+            console.log('sourceNameSpace: ' , sourceNameSpace);
+            console.log('targetNameSpace: ' , targetNameSpace);
             console.log('stateParams: ' , $stateParams);
            
             DbSignature.execute.query({
-                signatureId: $stateParams.signatureId,
                 className: className,
-                nameSpace: nameSpace,
-                input: input,
+                sourceNameSpace: sourceNameSpace.nameSpace,
+                targetNameSpace: targetNameSpace.nameSpace,
                 parameters: parameters
+            }, function(results){
+               const jsonResults = JSON.parse(results.content);
+                $scope.submitted = true;
+                console.log('high level results: ', results);
+                console.log('results struct ', results.content);
+                console.log('results are: ', jsonResults.results);
+                console.log('status is: ', jsonResults.status);
+                $scope.status = jsonResults.status;
+                $scope.results = jsonResults.results;
             });
         };
     }

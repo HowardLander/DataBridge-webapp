@@ -7,6 +7,8 @@ var mongoose = require('mongoose'),
     errorHandler = require('./errors.server.controller'),
     amqp = require('amqplib'),
     DBSignature = mongoose.model('DbSignature'),
+    express = require('express'),
+    url = require('url'),
     _ = require('lodash');
 
 /**
@@ -111,12 +113,75 @@ exports.signatureByID = function(req, res, next, id) {
     });
 };
 
+function publisher (req,res) {
+var amqp = require('amqplib');
+var basename = require('path').basename;
+var Promise = require('bluebird');
+var uuid = require('node-uuid');
+var parsedURL = url.parse(req.url, true);
+var app = express();
+console.log('in metadata publisher with query', parsedURL.query);
+console.log('in metadata publisher with ', parsedURL.query.sourceNameSpace);
+
+amqp.connect(req.app.locals.AMQPHost).then(function(conn) {
+  return conn.createChannel().then(function(ch) {
+    return new Promise(function(resolve) {
+      var corrId = uuid();
+      function maybeAnswer(msg) {
+        if (msg.properties.correlationId === corrId) {
+          //resolve(msg.content.toString());
+          resolve(msg);
+        }
+      }
+
+      var ok = ch.assertQueue('', {exclusive: true})
+        .then(function(qok) { return qok.queue; });
+
+      ok = ok.then(function(queue) {
+        return ch.consume(queue, maybeAnswer, {noAck: true})
+          .then(function() { return queue; });
+      });
+
+      ok = ok.then(function(queue) {
+        console.log(' [x] Requesting service');
+        console.log(' replyTo is: ', queue);
+        var sendHeaders = {};
+        var nameHeader = 'Create.Metadata.Signature.Java.MetadataDB.RPC';
+        sendHeaders.type = 'databridge';
+        sendHeaders.subtype = 'ingestmetadata';
+        sendHeaders.name = nameHeader;
+        sendHeaders.sourceNameSpace = parsedURL.query.sourceNameSpace;
+        sendHeaders.targetNameSpace = parsedURL.query.targetNameSpace;
+        sendHeaders.params = parsedURL.query.parameters;
+        sendHeaders.className = parsedURL.query.className;
+        ch.sendToQueue(req.app.locals.AMQPIngestRPCExchange, new Buffer('test'), {
+          correlationId: corrId, replyTo: queue, headers: sendHeaders
+        });
+      });
+    });
+  })
+  .then(function(result) {
+    // This doesn't seem like it should be needed, but it is!
+    result.content = result.content.toString();
+    console.log('result: ', result.content);
+    //result =  res.json(result.content);
+    res.json(result);
+  })
+  .finally(function() { conn.close(); });
+}).catch(console.warn);
+}
+
 exports.launch = function(req, res) {
+   console.log('in launch for signatures');
+   publisher(req, res);
+};
+
+exports.launch.prv = function(req, res) {
     console.log('in execute');
     console.log('signatureId: ', req.body.signatureId);
     console.log('className: ', req.body.className);
-    console.log('nameSpace: ', req.body.nameSpace);
-    console.log('input: ', req.body.input);
+    console.log('sourceNameSpace: ', req.body.sourceNameSpace);
+    console.log('targetNameSpace: ', req.body.targetNameSpace);
     console.log('parameters: ', req.body.parameters);
 
     var amqp = require('amqplib');
@@ -125,7 +190,7 @@ exports.launch = function(req, res) {
     // Default values for these.  Maybe they will eventually come from the client.
     var AMQPHost = req.app.locals.AMQPHost;
     var AMQPExchange = req.app.locals.AMQPExchange;
-    var nameHeader = 'Insert.Metadata.Java.URI.MetadataDB';
+    var nameHeader = 'Create.Metadata.Signature.Java.MetadataDB';
 
     amqp.connect(AMQPHost).then(function(conn) {
       return when(conn.createChannel().then(function(ch) {

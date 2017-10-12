@@ -9,7 +9,8 @@ module.exports = function(app) {
       .post(users.requiresLogin, signature.create);
 
    app.route('/signatures/launch')
-        .put(users.requiresLogin, signature.launch);
+        .put(users.requiresLogin, signature.launch)
+        .get(users.requiresLogin, signature.launch);
 
     // the categoryId param is added to the params object for the request
    app.route('/signatures/:signatureId')
