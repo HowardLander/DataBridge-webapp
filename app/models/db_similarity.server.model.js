@@ -29,6 +29,14 @@ var DbSimilaritySchema = new Schema({
         required: 'type cannot be blank',
     },
 
+    engineParams: {
+        type: String,
+        default: '',
+        trim: true,
+        unique : false,
+        // make this a required field
+    },
+
     description: {
         type: String,
         default: '',
@@ -40,5 +48,5 @@ var DbSimilaritySchema = new Schema({
 
 });
 
-DbSimilaritySchema.set('collection', 'DB_Similarities');
+DbSimilaritySchema.set('collection', 'DB_Similarity_Algorithms');
 mongoose.model('DbSimilarity', DbSimilaritySchema);

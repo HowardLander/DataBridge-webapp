@@ -43,6 +43,7 @@ a:hover {
       <ul style="list-style:none;padding:0px;" data-ng-repeat="similarity in similarities | orderBy : 'similarity'">
          <li> <a data-ng-href="#!/similarity/{{similarity._id}}"<B> Classname: {{ similarity.className }} </B></a></li>
          <li style="padding:0px 0px 0px 10px"> <B>Type:</B> {{ similarity.type }} </li>
+         <li style="padding:0px 0px 0px 10px"> <B>Engine Params:</B> {{ similarity.engineParams }} </li>
          <li style="padding:0px 0px 0px 10px"> <B>Description:</B> {{ similarity.description }} </li>
       </ul>
     </div>

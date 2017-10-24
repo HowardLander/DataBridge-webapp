@@ -17,6 +17,7 @@ angular.module('similarity')
             var dbSimilarity = new DbSimilarity.query ({
                 className: this.className,
                 type: this.type.name,
+                engineParams: this.engineParams,
                 description: this.description
             });
 
