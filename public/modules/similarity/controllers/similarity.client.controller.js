@@ -81,28 +81,30 @@ angular.module('similarity')
             console.log('scope.similarity: ', $scope.similarity);
         };
 
-        $scope.execute = function(className, nameSpace, similarityDirectory) {
+        $scope.execute = function(className, nameSpace, params) {
             console.log('className: ' , className);
-            var lastDirCharacter = similarityDirectory.charAt(similarityDirectory.length - 1);
-            if (lastDirCharacter !== '/') {
-               similarityDirectory = similarityDirectory.concat('/');
-            }
-            var lastDot = className.lastIndexOf('.');
-            var lastClass = className.slice(lastDot + 1);
-            var outputDir = similarityDirectory.concat(nameSpace, '-', lastClass);
-            var outputFile = Utilities.dateFileName(outputDir, '.net');
-            $scope.outputFile = outputFile;
-            console.log('outputFile: ' , outputFile);
             console.log('stateParams: ' , $stateParams);
+
+            // Clear these in case there were any previous results
+            $scope.status = '';
+            $scope.results = '';
            
             DbSimilarity.execute.query({
-                similarityId: $stateParams.similarityId,
                 className: className,
                 nameSpace: nameSpace,
-                outputFile: outputFile
-            });
+                parameters: params
+            }, function(results){
+               const jsonResults = JSON.parse(results.content);
+                $scope.submitted = true;
+                console.log('high level results: ', results);
+                console.log('results struct ', results.content);
+                console.log('results are: ', jsonResults.results);
+                console.log('status is: ', jsonResults.status);
+                $scope.status = jsonResults.status;
+                $scope.results = jsonResults.results;
+            }
+          );
 
-            return outputFile;
         };
     }
 ]).service('Utilities', function() {

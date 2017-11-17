@@ -16,7 +16,7 @@ angular.module('similarity').factory('DbSimilarity', ['$resource',
             query: { method: 'PUT' }
            }),
            execute: $resource('similarity/:similarityId/launch', { similarityId: '@_id' }, {
-            query: { method: 'PUT' }
+            query: { method: 'GET' }
         })
     };
   }

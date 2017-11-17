@@ -42,6 +42,7 @@ module.exports = function(db) {
     app.locals.AMQPHost = config.AMQPHost;
     app.locals.AMQPExchange = config.AMQPExchange;
     app.locals.AMQPRPCExchange = config.AMQPRPCExchange;
+    app.locals.AMQPRelevanceRPCExchange = config.AMQPRelevanceRPCExchange;
     app.locals.AMQPIngestRPCExchange = config.AMQPIngestRPCExchange;
 
 	// Passing the request url to environment locals

@@ -8,6 +8,7 @@ module.exports = {
     AMQPHost: 'amqp://localhost',
     AMQPRPCExchange: 'network-test-howard-rpcQueue', 
     AMQPIngestRPCExchange: 'ingest-test-howard-rpcQueue', 
+    AMQPRelevanceRPCExchange: 'relevance-test-howard-rpcQueue', 
     AMQPExchange: 'integration-test-howard', 
 
 	app: {

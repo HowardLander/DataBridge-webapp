@@ -7,6 +7,8 @@ var mongoose = require('mongoose'),
     errorHandler = require('./errors.server.controller'),
     amqp = require('amqplib'),
     DBSimilarity = mongoose.model('DbSimilarity'),
+    express = require('express'),
+    url = require('url'),
     _ = require('lodash');
 
 /**
@@ -110,7 +112,73 @@ exports.similarityByID = function(req, res, next, id) {
     });
 };
 
+
+
+function publisher (req,res) {
+var amqp = require('amqplib');
+var basename = require('path').basename;
+var Promise = require('bluebird');
+var uuid = require('node-uuid');
+var parsedURL = url.parse(req.url, true);
+var app = express();
+console.log('in similarity publisher with query', parsedURL.query);
+console.log('in similarity publisher with ', parsedURL.query.nameSpace);
+console.log('in similarity publisher with ', parsedURL.nameSpace);
+
+amqp.connect(req.app.locals.AMQPHost).then(function(conn) {
+  return conn.createChannel().then(function(ch) {
+    return new Promise(function(resolve) {
+      var corrId = uuid();
+      function maybeAnswer(msg) {
+        if (msg.properties.correlationId === corrId) {
+          resolve(msg);
+        }
+      }
+
+      var ok = ch.assertQueue('', {exclusive: true})
+        .then(function(qok) { return qok.queue; });
+
+      ok = ok.then(function(queue) {
+        return ch.consume(queue, maybeAnswer, {noAck: true})
+          .then(function() { return queue; });
+      });
+
+      ok = ok.then(function(queue) {
+        console.log(' [x] Requesting service');
+        console.log(' replyTo is: ', queue);
+        console.log(' sending to: ', req.app.locals.AMQPRelevanceRPCExchange);
+        var sendHeaders = {};
+        var nameHeader = 'Create.SimilarityMatrix.Java.MetadataDB.URI.RPC';
+        sendHeaders.type = 'databridge';
+        sendHeaders.subtype = 'relevance';
+        sendHeaders.name = nameHeader;
+        sendHeaders.className = parsedURL.query.className;
+        sendHeaders.params = parsedURL.query.parameters;
+        sendHeaders.nameSpace = parsedURL.query.nameSpace;
+        ch.sendToQueue(req.app.locals.AMQPRelevanceRPCExchange, new Buffer('test'), {
+          correlationId: corrId, replyTo: queue, headers: sendHeaders
+        });
+      });
+    });
+  })
+  .then(function(result) {
+    // This doesn't seem like it should be needed, but it is!
+    result.content = result.content.toString();
+    console.log('result: ', result.content);
+    //result =  res.json(result.content);
+    res.json(result);
+  })
+  .finally(function() { conn.close(); });
+}).catch(console.warn);
+}
+
+
 exports.launch = function(req, res) {
+   console.log('in launch for similarity');
+   publisher(req, res);
+};
+
+exports.launch.prv = function(req, res) {
     console.log('in execute');
     console.log('similarityId: ', req.body.similarityId);
     console.log('className: ', req.body.className);

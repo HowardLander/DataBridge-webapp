@@ -9,7 +9,8 @@ module.exports = function(app) {
       .post(users.requiresLogin, similarity.create);
 
    app.route('/similarity/launch')
-        .put(users.requiresLogin, similarity.launch);
+        .put(users.requiresLogin, similarity.launch)
+        .get(users.requiresLogin, similarity.launch);
 
     // the categoryId param is added to the params object for the request
    app.route('/similarity/:similarityId')
