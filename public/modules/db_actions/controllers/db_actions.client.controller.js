@@ -29,23 +29,29 @@ angular.module('db_actions')
            var headers = {};
            var headers2= {};
            var headers3= {};
-           headers[this.header1Key] = this.header1Value;
-           headers2[this.header2Key] = this.header2Value;
-           headers3[this.header3Key] = this.header3Value;
-         
-           var stringified = JSON.stringify(headers);
-           var parsed = JSON.parse(stringified);
-         
-           var stringified2 = JSON.stringify(headers2);
-           var parsed2 = JSON.parse(stringified2);
-
-           var stringified3 = JSON.stringify(headers3);
-           var parsed3 = JSON.parse(stringified3);
 
            dbAction.headers = {};
-           dbAction.headers[0] = parsed;
-           dbAction.headers[1] = parsed2;
-           dbAction.headers[2] = parsed3;
+
+           if (!!this.header1Value) {
+              headers[this.header1Key] = this.header1Value;
+              var stringified = JSON.stringify(headers);
+              var parsed = JSON.parse(stringified);
+              dbAction.headers[0] = parsed;
+           }
+
+           if (!!this.header2Value) {
+              headers2[this.header2Key] = this.header2Value;
+              var stringified2 = JSON.stringify(headers2);
+              var parsed2 = JSON.parse(stringified2);
+              dbAction.headers[1] = parsed2;
+           }
+
+           if (!!this.header3Value) {
+              headers3[this.header3Key] = this.header3Value;
+              var stringified3 = JSON.stringify(headers3);
+              var parsed3 = JSON.parse(stringified3);
+              dbAction.headers[2] = parsed3;
+           }
  
 
             // Redirect after save
